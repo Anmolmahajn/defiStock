@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>DeFiStock Java</title>
+    <style>
+        table { border-collapse: collapse; width: 80%; margin: 20px auto; }
+        th, td { border: 1px solid black; padding: 8px; text-align: center; }
+        th { background-color: #f2f2f2; }
+        h1, h2 { text-align: center; }
+        form { text-align: center; margin: 10px; }
+    </style>
+</head>
+<body>
+<h1>DeFiStock Dashboard</h1>
+
+<h2>Current Inventory & Funding</h2>
+<table>
+    <tr>
+        <th>Item</th>
+        <th>Quantity</th>
+        <th>Funding Goal ($)</th>
+        <th>Current Funding ($)</th>
+        <th>Fund Item</th>
+    </tr>
+    <tr th:each="item : ${inventoryList}">
+        <td th:text="${item.itemName}"></td>
+        <td th:text="${item.quantity}"></td>
+        <td th:text="${item.fundingGoal}"></td>
+        <td th:text="${item.currentFunding}"></td>
+        <td>
+            <form method="post" th:action="@{/fund}">
+                <input type="hidden" name="itemId" th:value="${item.id}"/>
+                <input type="number" name="points" min="1" step="1" placeholder="Points" required/>
+                <button type="submit">Fund</button>
+            </form>
+        </td>
+    </tr>
+</table>
+
+<h2>Vote for Next Item</h2>
+<form method="post" th:action="@{/vote}">
+    <input type="text" name="itemName" placeholder="Item Name" required/>
+    <input type="number" name="points" min="1" step="1" placeholder="Points" required/>
+    <button type="submit">Vote</button>
+</form>
+
+<h2>Voting Results</h2>
+<table>
+    <tr>
+        <th>Item</th>
+        <th>Total Points</th>
+    </tr>
+    <tr th:each="vote : ${voteTotals}">
+        <td th:text="${vote[0]}"></td>
+        <td th:text="${vote[1]}"></td>
+    </tr>
+</table>
+</body>
+</html>
