@@ -1,3 +1,5 @@
+package com.havkathon.defistock;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
